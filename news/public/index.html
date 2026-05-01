@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aether Market News</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <span class="glass-blob blob-one"></span>
+      <span class="glass-blob blob-two"></span>
+      <span class="glass-blob blob-three"></span>
+    </div>
+
+    <header class="shell topbar">
+      <a class="brand" href="/" aria-label="Aether Market News">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Aether</strong>
+          <small>Market News</small>
+        </span>
+      </a>
+      <nav class="feed-tabs" aria-label="Market feed filters">
+        <button class="tab terminal-tab is-active" data-view="markets">Markets</button>
+        <button class="tab terminal-tab" data-view="world">World</button>
+      </nav>
+      <nav class="feed-tabs market-tabs" aria-label="Market feed filters">
+        <button class="tab is-active" data-profile="pulse">Pulse</button>
+        <button class="tab" data-profile="macro">Macro</button>
+        <button class="tab" data-profile="earnings">Earnings</button>
+        <button class="tab" data-profile="crypto">Crypto</button>
+        <button class="tab" data-profile="deals">Deals</button>
+      </nav>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+        <span aria-hidden="true">◐</span>
+      </button>
+    </header>
+
+    <main class="shell dashboard app-view is-active" id="marketsView">
+      <section class="market-brief panel">
+        <div>
+          <p class="eyebrow">Active market desk</p>
+          <h1>Markets, catalysts, and tradeable news.</h1>
+          <p class="hero-copy">A compact live board for traders and investors: index tape, macro pressure, earnings catalysts, crypto, commodities, and article links that are meant to be opened fast.</p>
+        </div>
+        <form class="search-card" id="searchForm">
+          <label for="searchInput">Ticker, theme, or catalyst</label>
+          <div class="search-row">
+            <input id="searchInput" name="q" type="search" placeholder="NVDA, Fed, oil, banks..." autocomplete="off" />
+            <button type="submit">Search</button>
+          </div>
+          <div class="chips" aria-label="Quick searches">
+            <button type="button" data-query="semiconductors OR NVDA OR AMD">Semis</button>
+            <button type="button" data-query="Federal Reserve OR yields OR dollar">Rates</button>
+            <button type="button" data-query="oil OR OPEC OR energy stocks">Energy</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel tape-panel" aria-label="Market tape">
+        <div class="panel-heading">
+          <span>Market Tape</span>
+          <small id="marketUpdated">Loading quotes...</small>
+        </div>
+        <div class="market-tape" id="marketTape"></div>
+      </section>
+
+      <section class="content-grid">
+        <aside class="panel brief">
+          <div class="panel-heading">
+            <span>Session Brief</span>
+            <button class="ghost-button" id="refreshButton" type="button">Refresh</button>
+          </div>
+          <div id="briefList" class="brief-list"></div>
+          <div class="api-note">
+            <strong>Feed Quality</strong>
+            <p>News is filtered toward market-heavy domains and title/description matches so broad web articles do not crowd the desk.</p>
+          </div>
+        </aside>
+
+        <section class="panel feed-panel">
+          <div class="panel-heading">
+            <div>
+              <span id="feedTitle">Pulse Feed</span>
+              <div class="feed-stats">
+                <strong id="articleCount">--</strong> articles
+                <strong id="sourceCount">--</strong> sources
+                <strong id="riskTone">Neutral</strong>
+                <strong id="updatedAt">--</strong>
+              </div>
+            </div>
+            <div class="feed-actions">
+              <select id="sortSelect" aria-label="Sort articles">
+                <option value="publishedAt">Newest</option>
+                <option value="relevancy">Relevance</option>
+                <option value="popularity">Popularity</option>
+              </select>
+            </div>
+          </div>
+          <div class="status" id="status">Loading market feed...</div>
+          <div class="article-list" id="articleGrid"></div>
+        </section>
+      </section>
+    </main>
+
+    <main class="shell dashboard app-view" id="worldView">
+      <section class="world-grid">
+        <aside class="panel command-panel">
+          <div class="panel-heading">
+            <span>World Monitor</span>
+          </div>
+          <label class="select-label" for="worldZone">Focus Region</label>
+          <select id="worldZone">
+            <option value="gulf">Persian Gulf</option>
+            <option value="hormuz">Strait of Hormuz</option>
+            <option value="redsea">Red Sea / Bab el-Mandeb</option>
+            <option value="suez">Suez Canal</option>
+            <option value="taiwan">Taiwan Strait</option>
+            <option value="panama">Panama Canal</option>
+            <option value="la">Los Angeles / Long Beach</option>
+          </select>
+          <div class="layer-stack" aria-label="World layers">
+            <button class="layer-button is-active" type="button">Aircraft</button>
+            <button class="layer-button is-active" type="button">Ships</button>
+            <button class="layer-button is-active" type="button">Events</button>
+            <button class="layer-button is-active" type="button">Marine</button>
+          </div>
+          <button class="ghost-button wide-button" id="worldRefresh" type="button">Refresh World</button>
+          <div class="api-note">
+            <strong>Free Data Stack</strong>
+            <p>Aircraft from Airplanes.live, world events from GDELT with NewsAPI fallback, marine conditions from Open-Meteo, ships from AISStream when a free key is added.</p>
+          </div>
+        </aside>
+
+        <section class="panel world-map-panel">
+          <div class="panel-heading">
+            <div>
+              <span id="worldTitle">Persian Gulf Monitor</span>
+              <div class="feed-stats" id="worldStats">Loading world layers...</div>
+            </div>
+          </div>
+          <div class="world-map" id="worldMap" aria-label="World monitor map">
+            <div class="map-grid"></div>
+            <div id="worldMarkers"></div>
+          </div>
+        </section>
+
+        <aside class="panel intel-panel">
+          <div class="panel-heading">
+            <span>Intel Feed</span>
+          </div>
+          <div class="intel-section">
+            <strong>Marine Conditions</strong>
+            <div id="marineReadout" class="readout-list"></div>
+          </div>
+          <div class="intel-section">
+            <strong>World Events</strong>
+            <div id="eventFeed" class="event-feed"></div>
+          </div>
+        </aside>
+
+        <section class="panel world-table-panel">
+          <div class="panel-heading">
+            <span>Live Assets</span>
+            <small id="assetUpdated">Waiting for feed...</small>
+          </div>
+          <div class="asset-table" id="assetTable"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
